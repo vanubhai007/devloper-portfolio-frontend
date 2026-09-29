@@ -106,7 +106,7 @@ cd backend && npm start
 | `OWNER_EMAIL` | for email | Where new-message notifications go |
 | `EMAIL_HOST` / `EMAIL_PORT` | no | Custom SMTP server. Leave empty to use Gmail. |
 | `SEND_ACK_EMAIL` | no | `true` sends visitors an automatic "thanks, I got your message" email |
-| `CLIENT_URL` | **yes (prod)** | Frontend origin(s) allowed by CORS, comma-separated, no trailing slash |
+| `CLIENT_URL` | **yes (prod)** | Frontend origin(s) allowed by CORS, comma-separated, no trailing slash. In development, any `localhost` / `127.0.0.1` port is also allowed automatically; in production (`NODE_ENV=production`) only `CLIENT_URL` is allowed. |
 
 If email isn't configured, messages are still saved to MongoDB and appear in the admin dashboard. They just aren't emailed.
 

@@ -18,11 +18,17 @@ app.set('trust proxy', 1);
 app.disable('x-powered-by');
 
 app.use(helmet());
+// In development, any localhost / 127.0.0.1 port is allowed so the Vite dev
+// server works however it is opened. Production only allows CLIENT_URL.
+const LOCAL_ORIGIN = /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/;
+const isAllowedOrigin = (origin) =>
+  env.clientUrls.includes(origin) || (!env.isProduction && LOCAL_ORIGIN.test(origin));
+
 app.use(
   cors({
     origin(origin, callback) {
       // Allow same-origin / server-to-server requests (no Origin header) and whitelisted frontends.
-      if (!origin || env.clientUrls.includes(origin)) return callback(null, true);
+      if (!origin || isAllowedOrigin(origin)) return callback(null, true);
       return callback(new Error(`CORS: origin ${origin} is not allowed`));
     },
     methods: ['GET', 'POST', 'PATCH', 'DELETE'],

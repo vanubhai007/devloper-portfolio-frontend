@@ -1,6 +1,6 @@
-import { Html, OrbitControls } from '@react-three/drei';
+import { OrbitControls } from '@react-three/drei';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import * as THREE from 'three';
 
 /** Evenly distributes n points on a sphere (Fibonacci lattice). */
@@ -18,26 +18,70 @@ function fibonacciSphere(n, radius) {
 }
 
 const tmp = new THREE.Vector3();
+const LABEL_HEIGHT = 0.42; // world units
 
-/** An HTML label that fades as it rotates to the back of the sphere. */
+/** Draws a neon "pill" label onto a canvas and returns it as a texture. */
+function createLabelTexture(text) {
+  const scale = 4; // render at high resolution for crisp text
+  const fontSize = 26 * scale;
+  const padX = 22 * scale;
+  const height = 50 * scale;
+  const font = `500 ${fontSize}px "JetBrains Mono", ui-monospace, monospace`;
+
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+  ctx.font = font;
+  const width = Math.ceil(ctx.measureText(text).width + padX * 2);
+  canvas.width = width;
+  canvas.height = height;
+
+  const r = height / 2;
+  const lw = 2 * scale;
+  ctx.beginPath();
+  if (ctx.roundRect) ctx.roundRect(lw, lw, width - lw * 2, height - lw * 2, r - lw);
+  else ctx.rect(lw, lw, width - lw * 2, height - lw * 2);
+  ctx.fillStyle = 'rgba(5, 6, 15, 0.82)';
+  ctx.fill();
+  ctx.lineWidth = lw;
+  ctx.strokeStyle = 'rgba(34, 211, 238, 0.55)';
+  ctx.stroke();
+
+  ctx.font = font;
+  ctx.fillStyle = '#e8ecf8';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(text, width / 2, height / 2 + scale);
+
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  texture.anisotropy = 4;
+  return { texture, aspect: width / height };
+}
+
+/**
+ * A camera-facing sprite label that fades and shrinks as it rotates to the
+ * back of the sphere. Pure Three.js — no DOM nodes, no per-frame layout.
+ */
 function Label({ position, name, radius }) {
-  const ref = useRef();
-  const anchor = useRef();
+  const sprite = useRef();
+  const { texture, aspect } = useMemo(() => createLabelTexture(name), [name]);
+
+  useEffect(() => () => texture.dispose(), [texture]);
+
   useFrame(() => {
-    if (!ref.current || !anchor.current) return;
-    anchor.current.getWorldPosition(tmp);
+    const s = sprite.current;
+    s.getWorldPosition(tmp);
     const t = (tmp.z + radius) / (2 * radius); // 0 (back) → 1 (front)
-    ref.current.style.opacity = String(0.15 + t * 0.85);
-    ref.current.style.transform = `scale(${0.75 + t * 0.35})`;
+    const size = LABEL_HEIGHT * (0.75 + t * 0.35);
+    s.scale.set(size * aspect, size, 1);
+    s.material.opacity = 0.15 + t * 0.85;
+    s.renderOrder = Math.round(t * 100);
   });
+
   return (
-    <group ref={anchor} position={position}>
-      <Html center zIndexRange={[10, 0]} style={{ pointerEvents: 'none' }}>
-        <span ref={ref} className="tech-label">
-          {name}
-        </span>
-      </Html>
-    </group>
+    <sprite ref={sprite} position={position}>
+      <spriteMaterial map={texture} transparent depthWrite={false} />
+    </sprite>
   );
 }
 

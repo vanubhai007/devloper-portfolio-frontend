@@ -1,0 +1,23 @@
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+.link {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 1.1rem;
+  transition: color var(--dur) var(--ease), border-color var(--dur) var(--ease), transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+.link:hover {
+  color: var(--primary);
+  border-color: rgba(var(--primary-rgb), 0.5);
+  box-shadow: var(--glow-primary);
+  transform: translateY(-3px);
+}

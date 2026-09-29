@@ -1,0 +1,32 @@
+.dot,
+.ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  pointer-events: none;
+  border-radius: 50%;
+  will-change: transform;
+}
+.dot {
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  background: var(--primary);
+  box-shadow: var(--glow-primary);
+}
+.ring {
+  width: 36px;
+  height: 36px;
+  margin: -18px 0 0 -18px;
+  border: 1px solid rgba(var(--primary-rgb), 0.5);
+  transition: width 0.25s var(--ease), height 0.25s var(--ease), margin 0.25s var(--ease), background 0.25s var(--ease), border-color 0.25s var(--ease);
+}
+.ring.active {
+  width: 56px;
+  height: 56px;
+  margin: -28px 0 0 -28px;
+  background: rgba(var(--primary-rgb), 0.08);
+  border-color: rgba(var(--secondary-rgb), 0.7);
+}
+.hidden { opacity: 0; }

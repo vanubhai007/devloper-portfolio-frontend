@@ -1,0 +1,31 @@
+.card {
+  position: relative;
+  padding: clamp(1.25rem, 3vw, 1.75rem);
+  height: 100%;
+  transition:
+    transform var(--dur) var(--ease),
+    border-color var(--dur) var(--ease),
+    box-shadow var(--dur) var(--ease);
+}
+/* Neon border that lights up on hover */
+.card::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--gradient);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity var(--dur) var(--ease);
+  pointer-events: none;
+}
+.interactive:hover,
+.interactive:focus-within {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card), 0 0 40px -12px rgba(var(--primary-rgb), 0.45);
+}
+.interactive:hover::before,
+.interactive:focus-within::before { opacity: 1; }

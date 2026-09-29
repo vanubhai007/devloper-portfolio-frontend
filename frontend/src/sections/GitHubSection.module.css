@@ -1,0 +1,66 @@
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: 1.5rem;
+  align-items: start;
+}
+.profile { display: flex; flex-direction: column; gap: 1.25rem; }
+.who { display: flex; align-items: center; gap: 1rem; }
+.avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 2px solid rgba(var(--primary-rgb), 0.5);
+  box-shadow: var(--glow-primary);
+  background: var(--surface);
+  object-fit: cover;
+}
+.avatarFallback { display: grid; place-items: center; font-size: 1.6rem; color: var(--primary); }
+.handle { margin: 0; font-size: 1.15rem; }
+.handleSub { color: var(--muted); font-size: 0.88rem; }
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; }
+.stat {
+  padding: 0.8rem 0.5rem;
+  text-align: center;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: rgba(5, 6, 15, 0.45);
+}
+.stat strong { display: block; font-family: var(--font-display); font-size: 1.35rem; }
+.stat span { color: var(--muted); font-size: 0.75rem; }
+.terminal {
+  margin: 0;
+  padding: 1rem;
+  border-radius: var(--radius-sm);
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--muted);
+  overflow-x: auto;
+}
+.terminal b { color: var(--success); font-weight: 400; }
+.repos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.repo { display: flex; flex-direction: column; gap: 0.6rem; }
+.repoName {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  font-size: 1rem;
+  font-family: var(--font-mono);
+  word-break: break-word;
+}
+.repoName a:hover { color: var(--primary); }
+.repoName::after { content: ''; position: absolute; inset: 0; }
+.repoDesc { margin: 0; color: var(--muted); font-size: 0.88rem; flex: 1; }
+.repoMeta { display: flex; gap: 1rem; color: var(--subtle); font-size: 0.8rem; align-items: center; }
+.lang { display: inline-flex; align-items: center; gap: 0.35rem; }
+.lang::before { content: ''; width: 9px; height: 9px; border-radius: 50%; background: var(--primary); }
+.note { color: var(--subtle); font-size: 0.82rem; margin-top: 1rem; }
+@media (max-width: 900px) {
+  .grid { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 560px) {
+  .repos { grid-template-columns: minmax(0, 1fr); }
+}

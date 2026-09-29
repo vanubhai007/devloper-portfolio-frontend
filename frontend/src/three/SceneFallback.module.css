@@ -1,0 +1,32 @@
+.fallback {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+.orb {
+  position: relative;
+  width: min(60vw, 380px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.25), transparent 30%),
+    radial-gradient(circle at 60% 65%, rgba(var(--secondary-rgb), 0.6), transparent 55%),
+    radial-gradient(circle at 40% 40%, rgba(var(--primary-rgb), 0.7), rgba(var(--accent-rgb), 0.2) 60%, transparent 70%);
+  filter: blur(0.5px);
+  box-shadow: 0 0 120px rgba(var(--primary-rgb), 0.25), 0 0 200px rgba(var(--secondary-rgb), 0.2);
+  animation: float 8s ease-in-out infinite;
+}
+.ring {
+  position: absolute;
+  inset: -14%;
+  border-radius: 50%;
+  border: 1px solid rgba(var(--primary-rgb), 0.35);
+  transform: rotateX(70deg);
+}
+.ring:nth-child(2) {
+  inset: -24%;
+  border-color: rgba(var(--secondary-rgb), 0.3);
+  transform: rotateX(70deg) rotateY(20deg);
+}

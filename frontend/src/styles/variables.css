@@ -1,0 +1,41 @@
+/* Theme tokens — change these to re-skin the whole site. */
+:root {
+  --bg: #05060f;
+  --bg-elevated: #0a0c1b;
+  --surface: rgba(255, 255, 255, 0.04);
+  --surface-strong: rgba(255, 255, 255, 0.07);
+  --primary: #22d3ee;
+  --primary-rgb: 34, 211, 238;
+  --secondary: #a855f7;
+  --secondary-rgb: 168, 85, 247;
+  --accent: #3b82f6;
+  --accent-rgb: 59, 130, 246;
+  --success: #34d399;
+  --danger: #f87171;
+  --warning: #fbbf24;
+  --text: #e8ecf8;
+  --muted: #9aa3bd;
+  --subtle: #6b7390;
+  --border: rgba(255, 255, 255, 0.09);
+  --border-strong: rgba(255, 255, 255, 0.16);
+
+  --gradient: linear-gradient(120deg, var(--primary), var(--accent) 45%, var(--secondary));
+  --glow-primary: 0 0 24px rgba(var(--primary-rgb), 0.35);
+  --glow-secondary: 0 0 24px rgba(var(--secondary-rgb), 0.35);
+  --shadow-card: 0 20px 50px -20px rgba(0, 0, 0, 0.7);
+
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+  --radius-sm: 10px;
+  --radius: 16px;
+  --radius-lg: 24px;
+  --container: 1200px;
+  --gutter: clamp(1rem, 4vw, 2rem);
+  --section-space: clamp(4.5rem, 10vw, 8rem);
+  --nav-height: 72px;
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur: 0.35s;
+}
